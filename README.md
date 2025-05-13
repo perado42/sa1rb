@@ -1,10 +1,24 @@
-# Extract Van Gogh Paintings Code Challenge
+# Extract Van Gogh Paintings
+
+## About Richard's Submission
+
+### Usage
+
+```
+python3 -mvenv .venv
+source .venv/bin/activate
+pip3 install --upgrade pip
+pip3 install -e .
+
+```
+
+## About the Challenge
 
 Goal is to extract a list of Van Gogh paintings from the attached Google search results page.
 
 ![Van Gogh paintings](https://github.com/serpapi/code-challenge/blob/master/files/van-gogh-paintings.png?raw=true "Van Gogh paintings")
 
-## Instructions
+### Instructions
 
 This is already fully supported on SerpApi. ([relevant test], [html file], [sample json], and [expected array].)
 Try to come up with your own solution and your own test.

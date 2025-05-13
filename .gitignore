@@ -49,3 +49,8 @@ build-iPhoneSimulator/
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 .DS_Store
+
+
+# ignorables for python
+__pycache__/
+sa1rb.egg-info/
