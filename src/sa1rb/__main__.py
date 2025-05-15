@@ -1,19 +1,28 @@
-"""Richard's Submission to SerpApi's Code Challenge: Main Program."""
+"""Richard's Submission to SerpApi's Code Challenge: main program."""
 
 from os.path import isfile
 
-from sa1rb import paintings_html_to_json
+from sa1rb import html_with_carousel_to_json
+from sa1rb import preprocess_json_for_comparison
 
 
 
-def main():
+def main( cmd=None ):
     """main entrypoint"""
 
     try:
 
-        paintings_html_to_json(
-            "files/van-gogh-paintings.html",
-            "files/converted-array.json" )
+        if cmd is None:
+            
+            html_with_carousel_to_json(
+                "files/van-gogh-paintings.html",
+                "files/van-gogh-paintings-carousel.json" )
+
+        elif cmd == "preprocess-json-for-comparison":
+
+            preprocess_json_for_comparison(
+                "files/expected-array.json",
+                "files/expected-array.yaml" )
 
     except:
 

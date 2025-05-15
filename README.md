@@ -2,15 +2,32 @@
 
 ## About Richard's Submission
 
-### Usage
+### Installation
 
 ```
 python3 -mvenv .venv
 source .venv/bin/activate
 pip3 install --upgrade pip
 pip3 install -e .
+```
+
+### Step 1. Simple Usage
+
+You can generate the `*-carousel.json` files from the corresponding `.html` files as follows.
+(So, this is the main solution to the challenge)
+```
 python3 -m sa1rb
 ```
+
+### Step 2. Ad-Hoc Debugging
+
+Having done that, you can use the following to convert the `.json` files to `.yaml` files with canonical field ordering.  These are useful for debugging.
+```
+python3 -m sa1rb preprocess-json-for-comparison
+diff files/expected-array.yaml files/van-gogh-paintings-carousel.yaml
+```
+If the diff has any differences to report, then something went wrong in the above step.
+
 
 ## About the Challenge
 
