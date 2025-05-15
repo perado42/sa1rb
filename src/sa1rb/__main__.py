@@ -13,7 +13,7 @@ def main():
 
         paintings_html_to_json(
             "files/van-gogh-paintings.html",
-            "files/van-gogh-paintings-converted.json" )
+            "files/converted-array.json" )
 
     except:
 

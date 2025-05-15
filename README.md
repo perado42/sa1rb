@@ -9,7 +9,7 @@ python3 -mvenv .venv
 source .venv/bin/activate
 pip3 install --upgrade pip
 pip3 install -e .
-
+python3 -m sa1rb
 ```
 
 ## About the Challenge

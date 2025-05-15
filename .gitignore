@@ -50,7 +50,9 @@ build-iPhoneSimulator/
 .rvmrc
 .DS_Store
 
-
 # ignorables for python
 __pycache__/
 sa1rb.egg-info/
+
+# don't check in the solution file
+files/converted-array.json
