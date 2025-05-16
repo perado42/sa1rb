@@ -1,9 +1,15 @@
-"""Richard's Submission to SerpApi's Code Challenge: main program."""
+"""
+Richard's Submission to SerpApi's Code Challenge:
+main program
+"""
 
 from os.path import isfile
 
-from sa1rb import html_with_carousel_to_json
-from sa1rb import preprocess_json_for_comparison
+from glob import glob
+from itertools import chain
+
+from sa1rb import html_with_artwork_to_json
+from sa1rb import json_to_html
 
 
 
@@ -13,16 +19,33 @@ def main( cmd=None ):
     try:
 
         if cmd is None:
-            
-            html_with_carousel_to_json(
-                "files/van-gogh-paintings.html",
-                "files/van-gogh-paintings-carousel.json" )
 
-        elif cmd == "preprocess-json-for-comparison":
+            fns = glob( "files/*.html" )
 
-            preprocess_json_for_comparison(
-                "files/expected-array.json",
-                "files/expected-array.yaml" )
+            for fn_inp in fns:
+                if fn_inp.endswith( "-unminified.html" ):
+                    continue
+                if fn_inp.endswith( "-recomposed.html" ):
+                    continue
+                print( fn_inp )
+                assert fn_inp.endswith( ".html" )
+                fn_outp = fn_inp[ :-len(".html") ] + "-artwork.json"
+
+                html_with_artwork_to_json( fn_inp, fn_outp )
+
+        elif cmd == "recompose":
+
+            fns \
+              = chain(
+                    glob( "files/expected-array.json" ),
+                    glob( "files/*-artwork.json" ) )
+
+            for fn_inp in fns:
+                print( fn_inp )
+                assert fn_inp.endswith( ".json" )
+                fn_outp = fn_inp[ :-len(".json") ] + "-recomposed.html"
+
+                json_to_html( fn_inp, fn_outp )
 
     except:
 
