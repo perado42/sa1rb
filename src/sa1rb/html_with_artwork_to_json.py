@@ -47,7 +47,8 @@ def html_with_artwork_to_json( f_inp_html, f_outp_json ): # pragma: no cover
         s = None
 
         try:
-            jsctx.eval( script )
+            jsctx.eval( script )  # SECURITY!!!  I wouldn't do this in
+            # production, but for purposes of this challenge, it'll do.
         except JSEvalException:
             pass
 
