@@ -22,6 +22,8 @@ files as follows.
 $ mv files files.richard
 $ cp -a ../code-challenge/files ./files
 $ python3 -m sa1rb
+files/van-gogh-paintings.html -> files/van-gogh-paintings-artwork.json
+$
 ```
 
 The output produced from `van-gogh-paintings.html` will be found in
@@ -35,17 +37,15 @@ visual inspection in a browser.
 
 ```
 $ python3 -m sa1rb recompose
+files/expected-array.json -> files/expected-array-recomposed.html
+files/van-gogh-paintings-artwork.json -> files/van-gogh-paintings-artwork-recomposed.html
 $ diff files/expected-array-recomposed.html files/van-gogh-paintings-artwork-recomposed.html 
-2c2
-< <h1>files/expected-array.json</h1>
----
-> <h1>files/van-gogh-paintings-artwork.json</h1>
+$
 ```
 
-The above output in the diff would indicate that everything worked fine,
-i.e. the mention of the filename in the heading is the only difference
-between the html file recomposed from the reference
-`expected-array.json` file, and the html file recomposed from the
+If diff exits with no output (like above), that means everything worked,
+i.e. there is not difference between the html file recomposed from the
+reference `expected-array.json` file, and the html file recomposed from the
 `van-gogh-paintings-artwork.json` file generated in Step 1.
 
 Diffing the JSON files themselves presents the difficulty that
@@ -71,11 +71,11 @@ reproduced correctly (disregarding the differences in formatting etc).
    folder underneath where you've checked out this repo).
 2. Repeat this a bunch of times to obtain several HTML files.  Try artists
    who produce different kinds of media (Van Gogh does paintings, Gursky does
-   photography, Buonarotti does sculpture, Norman Foster does architecture,
-   etc.)  Try with different browsers (When I tested, I used Firefox,
-   but for the Andreas Gursky example, I used Chromium).  Try with IPs based
-   in different countries.  (When I tested, I ran out of Germany and got
-   German localization).
+   photography, Buonarotti does sculpture, Olafur Eliasson does installations,
+   Norman Foster does architecture, etc.)  Try with different browsers (When
+   I tested, I used Firefox, but for the Andreas Gursky example, I used
+   Chromium).  Try with IPs based in different countries.  (When I tested, I
+   ran out of Germany and got German localization).
 3. For a less adventurous version, instead of doing the above two steps,
    just revert to the `files/` directory from my repo, i.e.
    `rm -rf files && mv files.richard files`

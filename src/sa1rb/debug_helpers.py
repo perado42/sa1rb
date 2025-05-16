@@ -14,8 +14,6 @@ def json_to_html( f_inp_json, f_outp_html ):
 
     f_outp_html.write( "<html>\n" )
 
-    f_outp_html.write( "<h1>{}</h1>\n".format( fn_inp_json ) )
-
     for artwork in doc[ "artworks" ]:
 
         f_outp_html.write( "<h2>{}</h2>\n".format( artwork["name"] ) )
