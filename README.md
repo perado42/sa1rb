@@ -2,27 +2,32 @@
 
 ## About Richard's Submission
 
-### Installation
+### Setup
 
 ```
+$ git clone https://github.com/serpapi/code-challenge.git
+$ git clone https://github.com/perado42/sa1rb.git
+$ cd sa1rb
 $ python3 -mvenv .venv
 $ source .venv/bin/activate
 $ pip3 install --upgrade pip
 $ pip3 install -e .
 ```
 
-### Step 1. Generate JSON output from HTML input
+### Simple Usage: Generate JSON output from HTML input
 
 You can generate the `*-artwork.json` files from the corresponding `.html`
 files as follows.
 ```
+$ mv files files.richard
+$ cp -a ../code-challenge/files ./files
 $ python3 -m sa1rb
 ```
 
 The output produced from `van-gogh-paintings.html` will be found in
 `van-gogh-paintings-artwork.json` in the `files` subdirectory.
 
-### Step 2. Recompose HTML from JSON for Inspection & Diffing
+### Manual Checks, Step 1: Recompose HTML from JSON for Inspection & Diffing
 
 Having done that, you can use the following to convert the `*-artwork.json`
 files to `*-recomposed.html` files.  These are useful for diffing and
@@ -49,30 +54,41 @@ of these JSON objects.  Field order and syntactic variance in JSON
 notation get in the way of that.  The recomposed HTML, however, is
 always in a textually canonical representation.
 
-### Step 3. Do Visual Inspection
+### Manual Checks, Step 2: Do Visual Inspection
 
 The HTML format presents a second opportunity for doing an ad-hoc
 inspection: You can just fire up two browser windows side-by-side, and load
-the original `van-gogh-paintings.html` in one and `van-gogh-paintings-artwork-recomposed.html` in the other, to visually
-inspect if the pictures, painting titles, and extra information were
+the original `van-gogh-paintings.html` in one and
+`van-gogh-paintings-artwork-recomposed.html` in the other, to visually
+inspect if the pictures, titles, and extra information were
 reproduced correctly (disregarding the differences in formatting etc).
 
-### Step 4. Get Adventurous
+### Manual Checks, Step 3: Get Adventurous
 
-* Go to Google, run a search that will return artwork, such as
-  "Andreas Gursky", and save as HTML.  (Hit `Ctrl+S` and select
-  `Web Page, HTML only` in the file format, then save to the `files/`
-  folder underneath where you've checked out this repo).
-* Repeat this a bunch of times to obtain several HTML files.  Try artists
-  who produce different kinds of media (Van Gogh does paintings, Gursky does
-  photography, Buonarotti does sculpture, Norman Foster does architecture,
-  etc.)  Try with different browsers (Chrome and Firefox for example).  Try
-  with IPs based in different countries.  (When I tested, I ran out of
-  Germany and got German localization).
-* Re-run `python3 -m sa1rb && python3 -m sa1rb recompose`
-* Load the different `-artwork-recomposed.html` files in browser windows
-  to compare the results two what your browser initially showed.
+1. Go to Google, run a search that will return artwork, such as
+   "Andreas Gursky", and save as HTML.  (Hit `Ctrl+S` and select
+   `Web Page, HTML only` in the file format, then save to the `files/`
+   folder underneath where you've checked out this repo).
+2. Repeat this a bunch of times to obtain several HTML files.  Try artists
+   who produce different kinds of media (Van Gogh does paintings, Gursky does
+   photography, Buonarotti does sculpture, Norman Foster does architecture,
+   etc.)  Try with different browsers (When I tested, I used Firefox,
+   but for the Andreas Gursky example, I used Chromium).  Try with IPs based
+   in different countries.  (When I tested, I ran out of Germany and got
+   German localization).
+3. For a less adventurous version, instead of doing the above two steps,
+   just revert to the `files/` directory from my repo, i.e.
+   `rm -rf files && mv files.richard files`
+4. Re-run `python3 -m sa1rb && python3 -m sa1rb recompose`
+5. Load each `.html` file and corresponding
+   `-artwork-recomposed.html` file side-by-side in browser windows
+   and inspect visually.
 
+### Automated Testing
+
+```
+$ python3 -m sa1rb test
+```
 
 
 ## About the Challenge

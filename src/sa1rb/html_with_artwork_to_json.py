@@ -1,22 +1,24 @@
-"""Richard's Submission to SerpApi's Code Challenge: reusable html_with_artwork_to_json function."""
+"""
+Richard's Submission to SerpApi's Code Challenge:
+html_with_artwork_to_json function.
+"""
 
-from json import dump as json_dump
+from json import dump as json_dump # pragma: no cover
 
-from bs4 import BeautifulSoup
-from py_mini_racer import MiniRacer, JSEvalException
+from bs4 import BeautifulSoup # pragma: no cover
+from py_mini_racer import MiniRacer, JSEvalException # pragma: no cover
 
-ARTWORK_KCs \
-  = [ "kc:/visual_art/visual_artist:works",
+ARTWORK_KCs = [ # pragma: no cover
+      "kc:/visual_art/visual_artist:works",
       "kc:/architecture/architect:designed" ]
 
 
-def html_with_artwork_to_json( fn_inp_html, fn_outp_json ):
+def html_with_artwork_to_json( f_inp_html, f_outp_json ): # pragma: no cover
     """Extract Van Gogh Paintings from HTML to JSON"""
 
 
     soup = None
-    with open( fn_inp_html, "rb" ) as f_in:
-        soup = BeautifulSoup( f_in.read(), features="html.parser" )
+    soup = BeautifulSoup( f_inp_html.read(), features="html.parser" )
 
 
     image_by_id = {}
@@ -59,8 +61,10 @@ def html_with_artwork_to_json( fn_inp_html, fn_outp_json ):
                 image_by_id[ image_id ] = s
 
 
+    hrefs_seen = set()
+
     artworks = []
-    
+
     for kc in ARTWORK_KCs:
 
         for container in soup.find_all( attrs = { "data-attrid": kc } ):
@@ -72,8 +76,12 @@ def html_with_artwork_to_json( fn_inp_html, fn_outp_json ):
                 strings = []
                 for div in record.find_all( "div" ):
                     if div.string:
-                        strings.append( div.string )
-                
+                        stripped = div.string.strip()
+                        if not stripped:
+                            continue
+                        if stripped not in strings:
+                            strings.append( stripped )
+
                 if not len(links) == 1:
                     continue
                 if not len(imgs) == 1:
@@ -85,17 +93,25 @@ def html_with_artwork_to_json( fn_inp_html, fn_outp_json ):
                 if not link_href:
                     continue
 
+                link_href = "https://www.google.com" + link_href
+
+                if link_href in hrefs_seen:
+                    continue
+                hrefs_seen.add( link_href )
+
                 img_id = imgs[0].get( "id" )
 
                 new_artwork \
-                = { "name": strings[ 0 ],
-                    "link": "https://www.google.com" + link_href }
-                
+                  = { "name": strings[ 0 ],
+                      "link": link_href }
+
                 image = None
                 if img_id in image_by_id:
                     image = image_by_id.get( img_id, None )
                 if not image:
                     image = imgs[0].get( "data-src", None )
+                if not image:
+                    image = imgs[0].get( "src", None )
 
                 if image:
                     new_artwork[ "image" ] = image
@@ -106,5 +122,14 @@ def html_with_artwork_to_json( fn_inp_html, fn_outp_json ):
                 artworks.append( new_artwork )
 
 
-    with open( fn_outp_json, "wt", encoding="utf-8" ) as f_out:
-        json_dump( { "artworks": artworks }, f_out, indent=2, ensure_ascii=False )
+    if artworks:
+        json_dump(
+            { "artworks": artworks },
+            f_outp_json,
+            indent=2, ensure_ascii=False )
+
+    else:
+        json_dump(
+            {},
+            f_outp_json,
+            indent=2, ensure_ascii=False )

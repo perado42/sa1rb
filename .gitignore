@@ -50,9 +50,15 @@ build-iPhoneSimulator/
 .rvmrc
 .DS_Store
 
+# ignorables for vscode
+.vscode/
+
 # ignorables for python
+.pytest_cache/
+.venv/
 __pycache__/
 sa1rb.egg-info/
+.coverage
 
 # don't check in the solution file
 files/*-artwork.json
